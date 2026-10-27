@@ -17,8 +17,34 @@ export async function POST(request: NextRequest) {
   }
   const path = `${eventConfig.eventId}/${crypto.randomUUID()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, "_")}`;
   const upload = await supabase.storage.from("receipts").upload(path, file, { contentType: file.type, upsert: false });
-  if (upload.error) return Response.json({ error: "Could not upload receipt." }, { status: 500 });
-  const insert = await supabase.from("orders").insert({ ...input, event_id: eventConfig.eventId, receipt_path: path, status: "pending" }).select("id").single();
-  if (insert.error) { await supabase.storage.from("receipts").remove([path]); return Response.json({ error: insert.error.code === "23505" ? "That bank reference has already been submitted." : "Could not create order." }, { status: 400 }); }
+  if (upload.error) {
+    console.error("Receipt upload failed.", upload.error);
+    return Response.json({
+      error: upload.error.message === "Bucket not found"
+        ? "Receipt storage is not configured. Run the Supabase migration."
+        : "Could not upload receipt."
+    }, { status: 500 });
+  }
+  const insert = await supabase.from("orders").insert({
+    name: input.name,
+    email: input.email,
+    phone: input.phone,
+    qty: input.qty,
+    bank_reference: input.bankReference,
+    event_id: eventConfig.eventId,
+    receipt_path: path,
+    status: "pending"
+  }).select("id").single();
+  if (insert.error) {
+    console.error("Order insert failed.", insert.error);
+    await supabase.storage.from("receipts").remove([path]);
+    return Response.json({
+      error: insert.error.code === "23505"
+        ? "That bank reference has already been submitted."
+        : insert.error.code === "PGRST205" || insert.error.code === "PGRST204"
+          ? "The database is not configured. Run the Supabase migration."
+          : "Could not create order."
+    }, { status: 400 });
+  }
   return Response.json({ orderId: insert.data.id });
 }

@@ -94,6 +94,10 @@ The migration creates:
 - The private `receipts` bucket
 - Storage policies for public upload and admin-only reads
 
+If checkout reports that receipt storage or the database is not configured, run the
+entire migration in the Supabase SQL Editor. The storage bucket and database tables
+must be created in the same Supabase project referenced by `NEXT_PUBLIC_SUPABASE_URL`.
+
 ### 4. Configure the event
 
 All event-specific values belong in [`config/event.ts`](./config/event.ts). Do not hardcode event information in pages, API routes, metadata, or emails.

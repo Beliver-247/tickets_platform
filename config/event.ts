@@ -1,27 +1,27 @@
 export const eventConfig = {
-  eventId: "REPLACE_ME_EVENT_ID",
-  eventName: "REPLACE_ME_EVENT_NAME",
-  tagline: "REPLACE_ME_TAGLINE",
+  eventId: "DJNIGHT2026",
+  eventName: "DJ Night & Open mic",
+  tagline: "join the rave",
   date: "2026-12-31T22:00:00+05:30",
-  doorsOpenTime: "REPLACE_ME_DOORS_OPEN_TIME",
-  venueName: "REPLACE_ME_VENUE_NAME",
-  venueAddress: "REPLACE_ME_VENUE_ADDRESS",
+  doorsOpenTime: "5.30PM",
+  venueName: "New Building",
+  venueAddress: "14th floor",
   mapLink: "https://maps.google.com/?q=REPLACE_ME",
-  ticketPrice: 2500,
+  ticketPrice: 500,
   currency: "LKR",
   maxTicketsPerOrder: 5,
   totalCapacity: undefined as number | undefined,
   salesOpen: true,
   bank: {
-    accountName: "REPLACE_ME_ACCOUNT_NAME",
-    bankName: "REPLACE_ME_BANK_NAME",
-    accountNumber: "REPLACE_ME_ACCOUNT_NUMBER",
-    branch: "REPLACE_ME_BRANCH",
-    paymentInstructions: "REPLACE_ME_PAYMENT_INSTRUCTIONS"
+    accountName: "Malintha Perera",
+    bankName: "Test Bank",
+    accountNumber: "120192018989",
+    branch: "Malabe",
+    paymentInstructions: "Transfer and upload recipt"
   },
   contact: {
-    supportEmail: "REPLACE_ME_SUPPORT_EMAIL",
-    supportPhone: "REPLACE_ME_SUPPORT_PHONE_OR_WHATSAPP"
+    supportEmail: "sliitchoir@gmail.com",
+    supportPhone: "0714266663"
   },
   theme: {
     primary: "#d8ff3e",
@@ -30,8 +30,8 @@ export const eventConfig = {
     heroImagePath: ""
   },
   ticketPrefix: "DJ-",
-  emailSubject: "REPLACE_ME_EMAIL_SUBJECT",
-  emailFooterNote: "REPLACE_ME_EMAIL_FOOTER_NOTE"
+  emailSubject: "Your Tickets have been approved",
+  emailFooterNote: "Use these to gain access for the DJ night on 16th November at 14th floor new building"
 } as const;
 
 export type EventConfig = typeof eventConfig;
