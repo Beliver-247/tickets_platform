@@ -14,6 +14,11 @@ body {
 }
 a { color: inherit; text-decoration: none; }
 button, input, select, textarea { font: inherit; }
+a, button:not(:disabled), select { cursor: pointer; }
+a, button:not(:disabled) { transition: transform .15s ease, opacity .15s ease; }
+a:hover, button:not(:disabled):hover { transform: translateY(-1px); opacity: .9; }
+a:active, button:not(:disabled):active { transform: translateY(0) scale(.98); }
+button:disabled { cursor: not-allowed; }
 .noise {
   background-image: radial-gradient(rgba(255,255,255,.07) 1px, transparent 1px);
   background-size: 4px 4px;

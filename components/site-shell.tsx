@@ -5,7 +5,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   return <main className="min-h-screen bg-zinc-950 text-zinc-100">
     <header className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-5 py-5">
       <Link href="/" className="min-w-0 truncate font-black tracking-tight">{eventConfig.eventName}</Link>
-      <nav className="flex shrink-0 gap-4 text-sm text-zinc-400"><Link href="/status">Check order</Link><Link href="/admin/login">Admin</Link></nav>
+      <nav className="flex shrink-0 gap-4 text-sm text-zinc-400"><Link href="/status">Check order</Link></nav>
     </header>
     {children}
     <footer className="mx-auto max-w-6xl px-5 py-12 text-sm text-zinc-500">Need help? {eventConfig.contact.supportEmail} · {eventConfig.contact.supportPhone}</footer>

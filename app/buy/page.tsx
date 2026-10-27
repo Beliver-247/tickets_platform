@@ -26,6 +26,16 @@ export default function BuyPage() {
     } catch (e) { setError(e instanceof Error ? e.message : "Could not submit order."); setLoading(false); }
   }
   return <SiteShell><div className="mx-auto max-w-2xl px-5 py-12"><p className="text-sm uppercase tracking-widest text-[var(--accent)]">Reserve your spot</p><h1 className="mt-2 text-4xl font-black">Buy tickets</h1><p className="mt-3 text-zinc-400">Transfer the total first, then upload your receipt.</p>
+    <section className="mt-8 rounded-3xl border border-zinc-800 bg-zinc-900 p-5 md:p-8">
+      <p className="text-sm uppercase tracking-widest text-zinc-500">Bank transfer details</p>
+      <div className="mt-4 grid gap-3 text-sm text-zinc-300 sm:grid-cols-2">
+        <p><b className="text-white">Account:</b> {eventConfig.bank.accountName}</p>
+        <p><b className="text-white">Bank:</b> {eventConfig.bank.bankName}</p>
+        <p><b className="text-white">Account number:</b> {eventConfig.bank.accountNumber}</p>
+        <p><b className="text-white">Branch:</b> {eventConfig.bank.branch}</p>
+      </div>
+      <p className="mt-4 border-t border-zinc-800 pt-4 text-sm leading-relaxed text-zinc-400">{eventConfig.bank.paymentInstructions}</p>
+    </section>
     <form onSubmit={submit} className="mt-8 space-y-5 rounded-3xl border border-zinc-800 bg-zinc-900 p-5 md:p-8">
       {["name", "email", "phone", "bankReference"].map((name) => <label key={name} className="block text-sm font-bold capitalize">{name === "bankReference" ? "Bank reference / transaction number" : name}<input name={name} type={name === "email" ? "email" : "text"} required className="mt-2 w-full rounded-xl border border-zinc-700 bg-zinc-950 px-4 py-3 font-normal outline-none focus:border-[var(--primary)]" /></label>)}
       <label className="block text-sm font-bold">Ticket quantity<select value={qty} onChange={e => setQty(Number(e.target.value))} className="mt-2 w-full rounded-xl border border-zinc-700 bg-zinc-950 px-4 py-3 font-normal">{Array.from({ length: eventConfig.maxTicketsPerOrder }, (_, i) => <option key={i + 1} value={i + 1}>{i + 1}</option>)}</select></label>
