@@ -2,7 +2,7 @@ export const eventConfig = {
   eventId: "DJNIGHT2026",
   eventName: "Open Mic & DJ night",
   tagline: "join the rave",
-  date: "2026-12-31T22:00:00+05:30",
+  date: "2026-10-16T22:00:00+05:30",
   doorsOpenTime: "5.30PM",
   venueName: "New Building",
   venueAddress: "14th floor",
@@ -13,11 +13,11 @@ export const eventConfig = {
   totalCapacity: undefined as number | undefined,
   salesOpen: true,
   bank: {
-    accountName: "Malintha Perera",
-    bankName: "Test Bank",
-    accountNumber: "120192018989",
-    branch: "Malabe",
-    paymentInstructions: "Transfer and upload recipt"
+    accountName: "Dumindu Mendis",
+    bankName: "People's Bank",
+    accountNumber: "081200210025946",
+    branch: "Ruwanwella",
+    paymentInstructions: "Transfer and upload recipt put reference as DJ-ITXXXXXXXX"
   },
   contact: {
     supportEmail: "sliitchoir@gmail.com",
