@@ -13,7 +13,7 @@ This project does **not** use a payment gateway or QR codes.
 - Manual admin approval and rejection workflow
 - Ticket email delivery through Gmail SMTP
 - Customer order-status lookup
-- Ticket number generation with configurable prefix
+- SLIIT ID-based ticket numbers, with one ticket label per ticket quantity
 - Capacity limits and sales-open/closed controls
 - Admin receipt preview through short-lived signed URLs
 - Door check-in by ticket number, name, or email
@@ -74,7 +74,7 @@ Never commit `.env.local`.
 ### 3. Configure Supabase
 
 1. Open the Supabase project SQL Editor.
-2. Run [`supabase/migrations/001_initial.sql`](./supabase/migrations/001_initial.sql).
+2. Run [`supabase/migrations/001_initial.sql`](./supabase/migrations/001_initial.sql), then [`supabase/migrations/002_sliit_ticket_numbers.sql`](./supabase/migrations/002_sliit_ticket_numbers.sql).
 3. Confirm that the `receipts` Storage bucket is private.
 4. Create an Auth user with email and password.
 5. Add that user's UUID to the admin table:
@@ -162,19 +162,19 @@ supabase/migrations/        Database schema and RLS migration
 2. Read the bank-transfer instructions.
 3. Transfer the ticket total to the configured bank account.
 4. Select **Buy ticket**.
-5. Enter your full name, email, phone number, ticket quantity, and bank reference.
+5. Enter your SLIIT ID (two letters followed by 8 digits), full name, email, phone number, ticket quantity, and bank reference. Email and bank reference are pre-filled from the SLIIT ID (`SLIIT_ID@my.sliit.lk` and `DJ-SLIIT_ID`), and both can be changed.
 6. Upload the payment receipt as a JPG, PNG, WEBP, or PDF under 5 MB.
 7. Submit the order.
 
-The order remains pending until an administrator verifies the payment. After approval, the ticket number is sent to the submitted email address. Customers should check their spam folder.
+The order remains pending until an administrator verifies the payment. After approval, the submitted email receives one ticket number per quantity, such as `AB22110084 - 1` through `AB22110084 - 5`. Share the individual numbers with friends. Customers should check their spam folder.
 
 ### Checking order status
 
-Open `/status` and enter the same email address used when buying the ticket. The page shows pending, approved, or rejected orders. Approved orders include the ticket number.
+Open `/status` and enter the same email address used when buying the ticket. The page shows pending, approved, or rejected orders. Approved orders include each individual ticket number.
 
 ### At the entrance
 
-Show the ticket email and ticket number to door staff. Staff may search using the ticket number, name, or email address.
+Show the relevant ticket number from the email to door staff. Staff may search using an individual ticket number such as `AB22110084 - 2`, the name, or the email address. Each individual ticket is checked in separately.
 
 ## Admin guide
 
@@ -201,8 +201,8 @@ Rejected orders may include an optional reason, which is emailed to the customer
 1. Open `/admin/checkin`.
 2. Search by ticket number, name, or email.
 3. Ticket-number searches accept different capitalization and tolerate missing spaces or dashes.
-4. For a multi-ticket order, select the number of tickets being used.
-5. Select **Check in**.
+4. For a shared ticket, search its individual number, such as `AB22110084 - 3`.
+5. Select **Check in ticket**. Each ticket number can be checked in only once.
 
 The page displays approved, checked-in, and remaining ticket counters. A customer who has already used all tickets receives a clear warning.
 

@@ -8,11 +8,13 @@ export type Order = {
   phone: string;
   qty: number;
   bank_reference: string;
+  sliit_id: string | null;
   receipt_path: string;
   status: OrderStatus;
   rejection_reason: string | null;
   ticket_number: string | null;
   checked_in_count: number;
+  checked_in_tickets: number[];
   checked_in_at: string | null;
   created_at: string;
   approved_at: string | null;
