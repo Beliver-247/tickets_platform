@@ -1,6 +1,6 @@
 export const eventConfig = {
   eventId: "DJNIGHT2026",
-  eventName: "DJ Night & Open mic",
+  eventName: "Open Mic & DJ night",
   tagline: "join the rave",
   date: "2026-12-31T22:00:00+05:30",
   doorsOpenTime: "5.30PM",
@@ -24,8 +24,12 @@ export const eventConfig = {
     supportPhone: "0714266663"
   },
   theme: {
-    primary: "#d8ff3e",
-    accent: "#ff3cac",
+    primary: "#c026ff",
+    accent: "#ff2bd6",
+    background: "#0b0810",
+    surface: "#17111f",
+    foreground: "#f8f4ff",
+    muted: "#b9abc7",
     logoPath: "",
     heroImagePath: ""
   },
