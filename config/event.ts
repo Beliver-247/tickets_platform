@@ -1,7 +1,7 @@
 export const eventConfig = {
   eventId: "DJNIGHT2026",
   eventName: "Open Mic & DJ night",
-  tagline: "join the rave",
+  tagline: "SLIIT Choir presents",
   date: "2026-11-16T17:30:00+05:30",
   doorsOpenTime: "5.30PM",
   venueName: "New Building",
