@@ -5,6 +5,26 @@
   --foreground: #f8f4ff;
 }
 
+body[data-theme="dark"] {
+  --theme-background: #0b0810;
+  --theme-surface: #17111f;
+  --theme-foreground: #f8f4ff;
+  --theme-muted: #b9abc7;
+  --theme-border: #3f3348;
+  --theme-subtle: #21182a;
+  --theme-input: #0b0810;
+}
+
+body[data-theme="light"] {
+  --theme-background: #fff8ff;
+  --theme-surface: #ffffff;
+  --theme-foreground: #24152d;
+  --theme-muted: #675273;
+  --theme-border: #e6d9eb;
+  --theme-subtle: #f7eef9;
+  --theme-input: #fffaff;
+}
+
 * { box-sizing: border-box; }
 body {
   margin: 0;
@@ -20,6 +40,27 @@ a:hover, button:not(:disabled):hover { transform: translateY(-1px); opacity: .9;
 a:active, button:not(:disabled):active { transform: translateY(0) scale(.98); }
 button:disabled { cursor: not-allowed; }
 .noise {
-  background-image: radial-gradient(rgba(192,38,255,.1) 1px, transparent 1px);
+  background-color: var(--theme-background);
+  background-image: radial-gradient(var(--theme-pattern, rgba(192,38,255,.1)) 1px, transparent 1px);
   background-size: 4px 4px;
 }
+
+body[data-theme="light"] .bg-zinc-950 { background-color: var(--theme-background); }
+body[data-theme="light"] .bg-zinc-900,
+body[data-theme="light"] .bg-zinc-900\/95 { background-color: var(--theme-surface); }
+body[data-theme="light"] .bg-zinc-900 { background-color: var(--theme-subtle); }
+body[data-theme="light"] .bg-zinc-800 { background-color: #f0e5f4; }
+body[data-theme="light"] .bg-red-950 { background-color: #fff0f3; }
+body[data-theme="light"] .border-zinc-800,
+body[data-theme="light"] .border-zinc-700 { border-color: var(--theme-border); }
+body[data-theme="light"] .text-zinc-100,
+body[data-theme="light"] .text-zinc-200,
+body[data-theme="light"] .text-white { color: #21152a; }
+body[data-theme="light"] .text-zinc-300,
+body[data-theme="light"] .text-zinc-400,
+body[data-theme="light"] .text-zinc-500 { color: #705f7b; }
+body[data-theme="light"] input,
+body[data-theme="light"] select,
+body[data-theme="light"] textarea { color: var(--theme-foreground); background-color: var(--theme-input); }
+body[data-theme="light"] .text-red-300 { color: #b4234d; }
+body[data-theme="light"] .noise { --theme-pattern: rgba(192,38,255,.16); }
