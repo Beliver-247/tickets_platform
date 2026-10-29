@@ -58,6 +58,7 @@ Fill in `.env.local`:
 ```env
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+NEXT_PUBLIC_SITE_URL=https://your-production-domain.com
 SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
 GMAIL_USER=tickets@example.com
 GMAIL_APP_PASSWORD=your-16-character-app-password
