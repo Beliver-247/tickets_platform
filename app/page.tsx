@@ -10,7 +10,7 @@ export default function Home() {
       <div className="min-w-0">
         <p className="mb-5 text-sm font-bold uppercase tracking-[.3em] text-[var(--accent)]">{eventConfig.tagline}</p>
         <h1 className="max-w-4xl break-words text-[clamp(3rem,8vw,7.5rem)] font-black uppercase leading-[.92] tracking-[-.05em]" style={{ overflowWrap: "anywhere" }}>{eventConfig.eventName}</h1>
-        <p className="mt-8 max-w-xl text-lg leading-relaxed text-[var(--theme-muted)]">{formatDate(eventConfig.date)} · Doors {eventConfig.doorsOpenTime}<br />{eventConfig.venueName}, {eventConfig.venueAddress}</p>
+        <p className="mt-8 max-w-xl text-lg leading-relaxed text-[var(--theme-muted)]">{formatDate(eventConfig.date)} · Doors Open at {eventConfig.doorsOpenTime}<br />{eventConfig.venueName}, {eventConfig.venueAddress}</p>
         <div className="mt-8 flex flex-wrap gap-3"><PurchaseCta /><ButtonLink href="/status" muted>Check an order</ButtonLink></div>
       </div>
       <div className="min-w-0 self-start rounded-3xl border border-[var(--theme-border)] bg-[var(--theme-surface)] p-6 shadow-2xl">
