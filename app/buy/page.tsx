@@ -10,9 +10,14 @@ import { SiteShell } from "@/components/site-shell";
 export default function BuyPage() {
   const [qty, setQty] = useState(1), [file, setFile] = useState<File | null>(null), [error, setError] = useState(""), [loading, setLoading] = useState(false);
   const [sliitId, setSliitId] = useState(""), [email, setEmail] = useState(""), [bankReference, setBankReference] = useState("");
+  function defaultTransactionAt() {
+    const now = new Date(), local = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+    return local.toISOString().slice(0, 16);
+  }
+  const [transactionAt, setTransactionAt] = useState(defaultTransactionAt);
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault(); setError("");
-    const form = new FormData(event.currentTarget), input = { name: String(form.get("name")), email: String(form.get("email")), phone: String(form.get("phone")), qty, bankReference: String(form.get("bankReference")), sliitId: String(form.get("sliitId")).toUpperCase().trim() };
+    const form = new FormData(event.currentTarget), input = { name: String(form.get("name")), email: String(form.get("email")), phone: String(form.get("phone")), qty, bankReference: String(form.get("bankReference")), sliitId: String(form.get("sliitId")).toUpperCase().trim(), transactionAt: String(form.get("transactionAt")) };
     const validationError = validateOrderInput(input);
     if (validationError || !file) return setError(validationError ?? "Upload your receipt.");
     if (!allowedReceiptTypes.includes(file.type) || file.size > MAX_RECEIPT_BYTES) return setError("Receipt must be a JPG, PNG, WEBP, or PDF under 5MB.");
@@ -43,6 +48,7 @@ export default function BuyPage() {
       <label className="block text-sm font-bold">Email<input name="email" type="email" required value={email || (sliitId ? `${sliitId}@my.sliit.lk` : "")} onChange={e => setEmail(e.target.value)} placeholder="AB22110084@my.sliit.lk" className="mt-2 w-full rounded-xl border border-zinc-700 bg-zinc-950 px-4 py-3 font-normal outline-none focus:border-[var(--primary)]" /><span className="mt-1 block text-xs font-normal text-zinc-500">This is pre-filled from your SLIIT ID, but you can change it.</span></label>
       <label className="block text-sm font-bold">Phone<input name="phone" type="text" required maxLength={10} pattern="\d{10}" inputMode="numeric" onInvalid={e => e.currentTarget.setCustomValidity("Phone number should be exactly 10 characters.")} onInput={e => e.currentTarget.setCustomValidity("")} className="mt-2 w-full rounded-xl border border-zinc-700 bg-zinc-950 px-4 py-3 font-normal outline-none focus:border-[var(--primary)]" /></label>
       <label className="block text-sm font-bold">Bank reference / transaction number<input name="bankReference" type="text" required value={bankReference || (sliitId ? `DJ-${sliitId}` : "")} onChange={e => setBankReference(e.target.value)} placeholder="DJ-AB22110084" className="mt-2 w-full rounded-xl border border-zinc-700 bg-zinc-950 px-4 py-3 font-normal outline-none focus:border-[var(--primary)]" /><span className="mt-1 block text-xs font-normal text-zinc-500">Pre-filled from your SLIIT ID. Formats like DJ-AB22110084, dj-ab22110084, or dj ab22110084 are accepted.</span></label>
+      <label className="block text-sm font-bold">Transaction date and time (Sri Lanka time)<input name="transactionAt" type="datetime-local" required value={transactionAt} onChange={e => setTransactionAt(e.target.value)} className="mt-2 w-full rounded-xl border border-zinc-700 bg-zinc-950 px-4 py-3 font-normal outline-none focus:border-[var(--primary)]" /><span className="mt-1 block text-xs font-normal text-zinc-500">Enter when the bank transfer was made, even if you submit this form later.</span></label>
       <label className="block text-sm font-bold">Ticket quantity<select value={qty} onChange={e => setQty(Number(e.target.value))} className="mt-2 w-full rounded-xl border border-zinc-700 bg-zinc-950 px-4 py-3 font-normal">{Array.from({ length: eventConfig.maxTicketsPerOrder }, (_, i) => <option key={i + 1} value={i + 1}>{i + 1}</option>)}</select></label>
       <label className="block text-sm font-bold">Receipt (image or PDF, max 5MB)<input type="file" accept=".jpg,.jpeg,.png,.webp,.pdf" required onChange={e => setFile(e.target.files?.[0] ?? null)} className="mt-2 block w-full rounded-xl border border-dashed border-zinc-700 p-4 text-sm font-normal text-zinc-400" /></label>
       <div className="border-t border-zinc-800 pt-5 text-xl font-black">Total: {formatMoney(qty * eventConfig.ticketPrice)}</div>

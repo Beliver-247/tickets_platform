@@ -17,6 +17,7 @@ export type Order = {
   checked_in_tickets: number[];
   checked_in_at: string | null;
   created_at: string;
+  transaction_at: string;
   approved_at: string | null;
   approved_by: string | null;
 };
