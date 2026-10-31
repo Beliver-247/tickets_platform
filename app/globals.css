@@ -66,6 +66,9 @@ body[data-theme="dark"] .date-filter-input { color-scheme: dark; }
 body[data-theme="light"] .date-filter-input { border-color: var(--theme-border); color-scheme: light; }
 body[data-theme="light"] .text-red-300 { color: #b4234d; }
 body[data-theme="light"] .noise { --theme-pattern: rgba(192,38,255,.16); }
-body[data-theme="light"] .admin-action-receipt { background-color: #eadff0; color: #3d2450; }
-body[data-theme="light"] .admin-action-approve { background-color: #c026ff; color: #210d2d; }
-body[data-theme="light"] .admin-action-reject { background-color: #b4234d; color: #ffffff; }
+.admin-action-receipt { border: 1px solid #66536f; }
+.admin-action-approve { border: 1px solid #d86bff; }
+.admin-action-reject { border: 1px solid #ff6d98; }
+body[data-theme="light"] .admin-action-receipt { background-color: #eadff0; color: #3d2450; border-color: #c7b2cf; }
+body[data-theme="light"] .admin-action-approve { background-color: #c026ff; color: #210d2d; border-color: #8d13bd; }
+body[data-theme="light"] .admin-action-reject { background-color: #b4234d; color: #ffffff; border-color: #8d183a; }

@@ -75,7 +75,8 @@ Never commit `.env.local`.
 ### 3. Configure Supabase
 
 1. Open the Supabase project SQL Editor.
-2. Run [`supabase/migrations/001_initial.sql`](./supabase/migrations/001_initial.sql), then [`supabase/migrations/002_sliit_ticket_numbers.sql`](./supabase/migrations/002_sliit_ticket_numbers.sql), and [`supabase/migrations/003_transaction_time.sql`](./supabase/migrations/003_transaction_time.sql).
+2. Run [`supabase/migrations/001_initial.sql`](./supabase/migrations/001_initial.sql), then [`supabase/migrations/002_sliit_ticket_numbers.sql`](./supabase/migrations/002_sliit_ticket_numbers.sql), [`supabase/migrations/003_transaction_time.sql`](./supabase/migrations/003_transaction_time.sql), [`supabase/migrations/004_allow_duplicate_bank_references.sql`](./supabase/migrations/004_allow_duplicate_bank_references.sql), and [`supabase/migrations/005_sequential_ticket_numbers.sql`](./supabase/migrations/005_sequential_ticket_numbers.sql).
+   The fourth migration allows multiple orders to use the same default SLIIT ID/reference; admins should verify each receipt separately.
 3. Confirm that the `receipts` Storage bucket is private.
 4. Create an Auth user with email and password.
 5. Add that user's UUID to the admin table:
@@ -243,7 +244,7 @@ No SQL changes are needed.
 2. Change `eventId` to a new unique slug, for example:
 
    ```ts
-   eventId: "neon-night-2027"
+   eventId: "neon-night-2027";
    ```
 
 3. Replace the event name, tagline, date, doors time, venue, address, map link, and theme.

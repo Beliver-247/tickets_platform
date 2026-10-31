@@ -13,6 +13,7 @@ export type Order = {
   status: OrderStatus;
   rejection_reason: string | null;
   ticket_number: string | null;
+  ticket_start: number;
   checked_in_count: number;
   checked_in_tickets: number[];
   checked_in_at: string | null;

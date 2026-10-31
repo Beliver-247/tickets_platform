@@ -55,9 +55,7 @@ export async function POST(request: NextRequest) {
     console.error("Order insert failed.", insert.error);
     await supabase.storage.from("receipts").remove([path]);
     return Response.json({
-      error: insert.error.code === "23505"
-        ? "That bank reference has already been submitted."
-        : insert.error.code === "PGRST205" || insert.error.code === "PGRST204"
+      error: insert.error.code === "PGRST205" || insert.error.code === "PGRST204"
           ? "The database is not configured. Run the Supabase migration."
           : "Could not create order."
     }, { status: 400 });
