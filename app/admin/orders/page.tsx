@@ -13,6 +13,7 @@ export default function AdminOrders() {
     [fromDate, setFromDate] = useState(""),
     [toDate, setToDate] = useState(""),
     [sliitSearch, setSliitSearch] = useState(""),
+    [transactionTime, setTransactionTime] = useState(""),
     [filtersOpen, setFiltersOpen] = useState(false),
     [transactionSort, setTransactionSort] = useState<"newest" | "oldest">(
       "newest",
@@ -53,10 +54,22 @@ export default function AdminOrders() {
           !o.sliit_id?.toLowerCase().includes(sliitSearch.toLowerCase().trim())
         )
           return false;
-        const date = o.transaction_at.slice(0, 10);
-        return transactionDate
-          ? date === transactionDate
-          : (!fromDate || date >= fromDate) && (!toDate || date <= toDate);
+        const date = new Intl.DateTimeFormat("en-CA", {
+          timeZone: "Asia/Colombo",
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        }).format(new Date(o.transaction_at));
+        if (transactionDate && date !== transactionDate) return false;
+        if (!transactionDate && fromDate && date < fromDate) return false;
+        if (!transactionDate && toDate && date > toDate) return false;
+        if (
+          transactionTime &&
+          new Date(o.transaction_at).getTime() !==
+            new Date(`${transactionTime}:00+05:30`).getTime()
+        )
+          return false;
+        return true;
       })
       .sort((a, b) => {
         const difference =
@@ -109,29 +122,55 @@ export default function AdminOrders() {
               </button>
             ))}
           </div>
-          <label className="block">
-            <span className="sr-only">Search by SLIIT ID</span>
-            <input
-              type="search"
-              value={sliitSearch}
-              onChange={(e) => setSliitSearch(e.target.value)}
-              placeholder="Search by SLIIT ID"
-              className="w-full rounded-full border border-zinc-800 bg-zinc-900 px-4 py-3 outline-none focus:border-[var(--primary)]"
-            />
-          </label>
-          <button
-            type="button"
-            onClick={() => setFiltersOpen((open) => !open)}
-            aria-expanded={filtersOpen}
-            className="flex w-full items-center justify-between rounded-2xl border border-zinc-800 bg-zinc-900 px-4 py-3 text-left text-sm font-semibold sm:w-fit"
-          >
-            <span>{filtersOpen ? "Hide filters" : "Show filters"}</span>
-            <span className="ml-3 text-lg leading-none" aria-hidden="true">
-              {filtersOpen ? "⌃" : "☰"}
-            </span>
-          </button>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
+            <button
+              type="button"
+              onClick={() => setFiltersOpen((open) => !open)}
+              aria-expanded={filtersOpen}
+              className="flex w-full items-center justify-between rounded-2xl border border-zinc-800 bg-zinc-900 px-4 py-3 text-left text-sm font-semibold sm:w-fit"
+            >
+              <span>{filtersOpen ? "Hide filters" : "Show filters"}</span>
+              <span className="ml-3 text-lg leading-none" aria-hidden="true">
+                {filtersOpen ? "⌃" : "☰"}
+              </span>
+            </button>
+            <label className="flex w-full flex-col gap-1 text-sm font-semibold sm:w-56">
+              Sort by transaction time
+              <select
+                value={transactionSort}
+                onChange={(e) =>
+                  setTransactionSort(
+                    e.target.value === "oldest" ? "oldest" : "newest",
+                  )
+                }
+                className="w-full rounded-full border border-zinc-700 bg-zinc-900 px-3 py-2"
+              >
+                <option value="newest">Newest first</option>
+                <option value="oldest">Oldest first</option>
+              </select>
+            </label>
+            <label className="flex w-full flex-col gap-1 text-sm font-semibold sm:w-64">
+              Transaction date and time
+              <input
+                type="datetime-local"
+                value={transactionTime}
+                onChange={(e) => setTransactionTime(e.target.value)}
+                className="date-filter-input w-full rounded-full border border-zinc-700 bg-zinc-900 px-3 py-2"
+              />
+            </label>
+          </div>
           {filtersOpen && (
             <div className="grid gap-3 rounded-2xl border border-zinc-800 bg-zinc-900 p-4 sm:grid-cols-2 lg:grid-cols-4 lg:items-end">
+              <label className="flex flex-col gap-1 text-sm font-semibold sm:col-span-2">
+                Search by SLIIT ID
+                <input
+                  type="search"
+                  value={sliitSearch}
+                  onChange={(e) => setSliitSearch(e.target.value)}
+                  placeholder="e.g. IT22110084"
+                  className="w-full rounded-full border border-zinc-700 bg-zinc-900 px-3 py-2 outline-none focus:border-[var(--primary)]"
+                />
+              </label>
               <label className="flex flex-col gap-1 text-sm font-semibold">
                 Day
                 <input
@@ -161,26 +200,12 @@ export default function AdminOrders() {
                   className="date-filter-input w-full rounded-full border border-zinc-700 bg-zinc-900 px-3 py-2 disabled:opacity-50"
                 />
               </label>
-              <label className="flex flex-col gap-1 text-sm font-semibold">
-                Sort by transaction time
-                <select
-                  value={transactionSort}
-                  onChange={(e) =>
-                    setTransactionSort(
-                      e.target.value === "oldest" ? "oldest" : "newest",
-                    )
-                  }
-                  className="w-full rounded-full bg-zinc-900 px-3 py-2"
-                >
-                  <option value="newest">Newest first</option>
-                  <option value="oldest">Oldest first</option>
-                </select>
-              </label>
               <button
                 onClick={() => {
                   setTransactionDate("");
                   setFromDate("");
                   setToDate("");
+                  setTransactionTime("");
                   setTransactionSort("newest");
                   setSliitSearch("");
                 }}
