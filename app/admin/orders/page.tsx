@@ -158,6 +158,19 @@ export default function AdminOrders() {
                 className="date-filter-input w-full rounded-full border border-zinc-700 bg-zinc-900 px-3 py-2"
               />
             </label>
+            <button
+              onClick={() => {
+                setTransactionDate("");
+                setFromDate("");
+                setToDate("");
+                setTransactionTime("");
+                setTransactionSort("newest");
+                setSliitSearch("");
+              }}
+              className="w-full rounded-full bg-zinc-800 px-4 py-2 text-sm sm:w-fit"
+            >
+              Clear filters
+            </button>
           </div>
           {filtersOpen && (
             <div className="grid gap-3 rounded-2xl border border-zinc-800 bg-zinc-900 p-4 sm:grid-cols-2 lg:grid-cols-4 lg:items-end">
@@ -200,19 +213,6 @@ export default function AdminOrders() {
                   className="date-filter-input w-full rounded-full border border-zinc-700 bg-zinc-900 px-3 py-2 disabled:opacity-50"
                 />
               </label>
-              <button
-                onClick={() => {
-                  setTransactionDate("");
-                  setFromDate("");
-                  setToDate("");
-                  setTransactionTime("");
-                  setTransactionSort("newest");
-                  setSliitSearch("");
-                }}
-                className="w-full rounded-full bg-zinc-800 px-4 py-2 text-sm sm:w-fit"
-              >
-                Clear filters
-              </button>
             </div>
           )}
         </div>
