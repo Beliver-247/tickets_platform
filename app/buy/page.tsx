@@ -110,9 +110,9 @@ export default function BuyPage() {
           onSubmit={submit}
           className="mt-8 space-y-5 rounded-3xl border border-zinc-800 bg-zinc-900 p-5 md:p-8"
         >
-          <p className="rounded-xl border border-[var(--theme-border)] bg-[var(--theme-subtle)] p-3 text-sm text-[var(--theme-muted)]">
-            After approval, your ticket email may arrive in your spam or junk
-            folder.
+          <p className="spam-warning rounded-xl p-4">
+            ! Important: after approval, check your spam or junk folder too, for your
+            ticket email.
           </p>
           <label className="block text-sm font-bold">
             SLIIT ID

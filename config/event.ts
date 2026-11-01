@@ -21,7 +21,11 @@ export const eventConfig = {
   },
   contact: {
     supportEmail: "sliitchoir@gmail.com",
-    supportPhone: "0714266663",
+    supportPhone: "0714211115",
+    supportContacts: [
+      { name: "Dumindu", phone: "071 4211115" },
+      { name: "Pishon", phone: "071 572 9549" },
+    ],
   },
   theme: {
     primary: "#c026ff",

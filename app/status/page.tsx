@@ -27,9 +27,9 @@ export default function StatusPage() {
       <div className="mx-auto max-w-xl px-5 py-12">
         <h1 className="text-4xl font-black">Check your order</h1>
         <p className="mt-3 text-zinc-400">Enter the email used at checkout.</p>
-        <p className="mt-4 rounded-xl border border-[var(--theme-border)] bg-[var(--theme-subtle)] p-3 text-sm text-[var(--theme-muted)]">
-          Ticket approval emails may arrive in your spam or junk folder, so
-          please check there too.
+        <p className="spam-warning mt-4 rounded-xl p-4">
+          ! Important: ticket approval emails may arrive in your spam or junk
+          folder, so please check there too.
         </p>
         <form onSubmit={search} className="mt-8 flex gap-2">
           <input
