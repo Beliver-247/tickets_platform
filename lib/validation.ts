@@ -13,6 +13,10 @@ export function isValidSliitId(sliitId: string) {
   return SLIIT_ID_PATTERN.test(sliitId.trim());
 }
 
+export function isValidOrderLookup(value: string) {
+  return isValidEmail(value) || isValidSliitId(value);
+}
+
 export function normalizeBankReference(bankReference: string) {
   const trimmed = bankReference.trim().toUpperCase();
   const match = trimmed.match(/^DJ[-\s]?([A-Z]{2}\d{8})$/);

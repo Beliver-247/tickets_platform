@@ -262,29 +262,39 @@ export default function AdminOrders() {
                   >
                     Receipt
                   </button>
-                  {tab === "pending" && (
-                    <>
-                      <button
-                        disabled={busy === order.id}
-                        onClick={() => action("approve", order.id)}
-                        className="admin-action admin-action-approve rounded-full px-3 py-2 text-sm font-bold"
-                      >
-                        Approve
-                      </button>
-                      <button
-                        onClick={() =>
-                          action(
-                            "reject",
-                            order.id,
-                            prompt("Reason (optional):") ??
-                              "Payment could not be verified.",
-                          )
-                        }
-                        className="admin-action admin-action-reject rounded-full px-3 py-2 text-sm"
-                      >
-                        Reject
-                      </button>
-                    </>
+                  {(tab === "pending" || tab === "rejected") && (
+                    <button
+                      disabled={busy === order.id}
+                      onClick={() => action("approve", order.id)}
+                      className="admin-action admin-action-approve rounded-full px-3 py-2 text-sm font-bold"
+                    >
+                      Approve
+                    </button>
+                  )}
+                  {tab !== "rejected" && (
+                    <button
+                      disabled={busy === order.id}
+                      onClick={() =>
+                        action(
+                          "reject",
+                          order.id,
+                          prompt("Reason (optional):") ??
+                            "Payment could not be verified.",
+                        )
+                      }
+                      className="admin-action admin-action-reject rounded-full px-3 py-2 text-sm"
+                    >
+                      Reject
+                    </button>
+                  )}
+                  {tab !== "pending" && (
+                    <button
+                      disabled={busy === order.id}
+                      onClick={() => action("pending", order.id)}
+                      className="admin-action admin-action-receipt rounded-full px-3 py-2 text-sm"
+                    >
+                      Move to pending
+                    </button>
                   )}
                   {tab === "approved" && (
                     <button

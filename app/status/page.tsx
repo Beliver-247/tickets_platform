@@ -11,11 +11,11 @@ export default function StatusPage() {
     setLoading(true);
     setError("");
     setOrders([]);
-    const email = String(new FormData(e.currentTarget).get("email"));
+    const identifier = String(new FormData(e.currentTarget).get("identifier") ?? "").trim();
     const r = await fetch("/api/status", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email }),
+      body: JSON.stringify({ identifier }),
     });
     const data = await r.json();
     if (!r.ok) setError(data.error ?? "No orders found.");
@@ -26,18 +26,19 @@ export default function StatusPage() {
     <SiteShell>
       <div className="mx-auto max-w-xl px-5 py-12">
         <h1 className="text-4xl font-black">Check your order</h1>
-        <p className="mt-3 text-zinc-400">Enter the email used at checkout.</p>
+        <p className="mt-3 text-zinc-400">Enter the email or SLIIT ID used at checkout.</p>
         <p className="spam-warning mt-4 rounded-xl p-4">
           ! Important: ticket approval emails may arrive in your spam or junk
           folder, so please check there too.
         </p>
         <form onSubmit={search} className="mt-8 flex gap-2">
           <input
-            name="email"
-            type="email"
+            name="identifier"
+            type="text"
             required
+            autoCapitalize="none"
             className="min-w-0 flex-1 rounded-full border border-zinc-700 bg-zinc-900 px-5 py-3"
-            placeholder="you@example.com"
+            placeholder="you@example.com or ITXXXXXXXX"
           />
           <button className="rounded-full bg-[var(--primary)] px-5 font-bold text-zinc-950">
             {loading ? "…" : "Search"}
