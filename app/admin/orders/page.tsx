@@ -249,6 +249,11 @@ export default function AdminOrders() {
                     Transaction: {formatDate(order.transaction_at)} · Submitted:{" "}
                     {formatDate(order.created_at)}
                   </p>
+                  {tab === "rejected" && order.rejection_reason && (
+                    <p className="mt-3 rounded-xl bg-red-950 p-3 text-sm text-red-300">
+                      Rejection reason: {order.rejection_reason}
+                    </p>
+                  )}
                 </div>
                 <div className="flex flex-wrap items-start gap-2">
                   <button
