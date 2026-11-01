@@ -30,6 +30,9 @@ export default function Home() {
                 Check an order
               </ButtonLink>
             </div>
+            <p className="mt-4 text-sm text-[var(--theme-muted)]">
+              To physically buy tickets, contact the numbers given below.
+            </p>
           </div>
           <div className="min-w-0 self-start rounded-3xl border border-[var(--theme-border)] bg-[var(--theme-surface)] p-6 shadow-2xl">
             <p className="text-sm uppercase tracking-widest text-zinc-500">
