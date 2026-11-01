@@ -110,7 +110,6 @@ At minimum, replace:
 - `eventName`
 - `tagline`
 - `date`
-- `doorsOpenTime`
 - `venueName`
 - `venueAddress`
 - Bank details
