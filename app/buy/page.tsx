@@ -88,7 +88,7 @@ export default function BuyPage() {
           </p>
           <div className="mt-4 grid gap-3 text-sm text-zinc-300 sm:grid-cols-2">
             <p>
-              <b className="text-white">Account:</b>{" "}
+              <b className="text-white">Account Holder:</b>{" "}
               {eventConfig.bank.accountName}
             </p>
             <p>

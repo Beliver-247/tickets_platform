@@ -33,6 +33,17 @@ export default function Home() {
             <p className="mt-4 text-sm text-[var(--theme-muted)]">
               To physically buy tickets, contact the numbers given below.
             </p>
+            <div className="mt-2 flex flex-col gap-1 text-base font-semibold">
+              {eventConfig.contact.supportContacts.map((contact) => (
+                <a
+                  key={contact.phone}
+                  href={`tel:${contact.phone.replace(/\s+/g, "")}`}
+                  className="text-[var(--accent)] underline underline-offset-2"
+                >
+                  {contact.name}: {contact.phone}
+                </a>
+              ))}
+            </div>
           </div>
           <div className="min-w-0 self-start rounded-3xl border border-[var(--theme-border)] bg-[var(--theme-surface)] p-6 shadow-2xl">
             <p className="text-sm uppercase tracking-widest text-zinc-500">
@@ -46,7 +57,7 @@ export default function Home() {
             </h2>
             <div className="mt-6 space-y-3 text-sm leading-relaxed text-zinc-300">
               <p>
-                <b className="text-white">Account:</b>{" "}
+                <b className="text-white">Account Holder:</b>{" "}
                 {eventConfig.bank.accountName}
               </p>
               <p>
