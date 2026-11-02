@@ -136,6 +136,10 @@ export default function BuyPage() {
             <span className="mt-1 block text-xs font-normal text-zinc-500">
               Use your SLIIT student ID (two letters followed by 8 digits).
             </span>
+            <span className="mt-1 block text-xs font-normal text-zinc-500">
+              Buying multiple tickets? You only need to enter the buyer&apos;s
+              SLIIT ID. All tickets will be issued correctly.
+            </span>
           </label>
           <label className="block text-sm font-bold">
             Name
