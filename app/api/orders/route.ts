@@ -2,6 +2,7 @@ import { NextRequest } from "next/server";
 import { eventConfig } from "@/config/event";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { allowedReceiptTypes, MAX_RECEIPT_BYTES, parseTransactionAt, validateOrderInput } from "@/lib/validation";
+import { notifyAdminsOfNewOrder } from "@/lib/push";
 
 function normalizeBankReference(bankReference: string) {
   const trimmed = bankReference.trim().toUpperCase();
@@ -60,5 +61,10 @@ export async function POST(request: NextRequest) {
           : "Could not create order."
     }, { status: 400 });
   }
+  await notifyAdminsOfNewOrder({
+    id: insert.data.id,
+    name: input.name,
+    qty: input.qty,
+  });
   return Response.json({ orderId: insert.data.id });
 }

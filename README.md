@@ -62,6 +62,9 @@ NEXT_PUBLIC_SITE_URL=https://your-production-domain.com
 SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
 GMAIL_USER=tickets@example.com
 GMAIL_APP_PASSWORD=your-16-character-app-password
+NEXT_PUBLIC_VAPID_PUBLIC_KEY=your-vapid-public-key
+VAPID_PRIVATE_KEY=your-vapid-private-key
+WEB_PUSH_SUBJECT=mailto:admin@example.com
 ```
 
 The following variables are server-only and must never be renamed with a `NEXT_PUBLIC_` prefix:
@@ -69,13 +72,18 @@ The following variables are server-only and must never be renamed with a `NEXT_P
 - `SUPABASE_SERVICE_ROLE_KEY`
 - `GMAIL_USER`
 - `GMAIL_APP_PASSWORD`
+- `VAPID_PRIVATE_KEY`
+- `WEB_PUSH_SUBJECT`
+
+`NEXT_PUBLIC_VAPID_PUBLIC_KEY` is safe to expose to the browser; the private key
+and subject must remain server-side.
 
 Never commit `.env.local`.
 
 ### 3. Configure Supabase
 
 1. Open the Supabase project SQL Editor.
-2. Run [`supabase/migrations/001_initial.sql`](./supabase/migrations/001_initial.sql), then [`supabase/migrations/002_sliit_ticket_numbers.sql`](./supabase/migrations/002_sliit_ticket_numbers.sql), [`supabase/migrations/003_transaction_time.sql`](./supabase/migrations/003_transaction_time.sql), [`supabase/migrations/004_allow_duplicate_bank_references.sql`](./supabase/migrations/004_allow_duplicate_bank_references.sql), and [`supabase/migrations/005_sequential_ticket_numbers.sql`](./supabase/migrations/005_sequential_ticket_numbers.sql).
+2. Run [`supabase/migrations/001_initial.sql`](./supabase/migrations/001_initial.sql), then [`supabase/migrations/002_sliit_ticket_numbers.sql`](./supabase/migrations/002_sliit_ticket_numbers.sql), [`supabase/migrations/003_transaction_time.sql`](./supabase/migrations/003_transaction_time.sql), [`supabase/migrations/004_allow_duplicate_bank_references.sql`](./supabase/migrations/004_allow_duplicate_bank_references.sql), [`supabase/migrations/005_sequential_ticket_numbers.sql`](./supabase/migrations/005_sequential_ticket_numbers.sql), and [`supabase/migrations/006_admin_push_subscriptions.sql`](./supabase/migrations/006_admin_push_subscriptions.sql).
    The fourth migration allows multiple orders to use the same default SLIIT ID/reference; admins should verify each receipt separately.
 3. Confirm that the `receipts` Storage bucket is private.
 4. Create an Auth user with email and password.
@@ -95,6 +103,14 @@ The migration creates:
 - Row Level Security policies
 - The private `receipts` bucket
 - Storage policies for public upload and admin-only reads
+
+Run [`supabase/migrations/006_admin_push_subscriptions.sql`](./supabase/migrations/006_admin_push_subscriptions.sql)
+to enable admin-only Web Push subscriptions. Generate a VAPID key pair with
+`npx web-push generate-vapid-keys`, add the public and private keys to the
+environment variables above, and redeploy. Each admin must then open the Orders
+page and select **Enable notifications**. Notifications require browser permission
+and an internet connection; delivery with the screen off depends on the device's
+background and battery settings.
 
 If checkout reports that receipt storage or the database is not configured, run the
 entire migration in the Supabase SQL Editor. The storage bucket and database tables
