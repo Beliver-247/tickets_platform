@@ -17,7 +17,12 @@ export default function AdminOrders() {
     [filtersOpen, setFiltersOpen] = useState(false),
     [transactionSort, setTransactionSort] = useState<"newest" | "oldest">(
       "newest",
-    );
+    ),
+    [pushStatus, setPushStatus] = useState<
+      "unknown" | "enabled" | "disabled" | "error"
+    >("unknown"),
+    [pushBusy, setPushBusy] = useState(false),
+    [testBusy, setTestBusy] = useState(false);
   async function load() {
     const r = await fetch("/api/admin/orders");
     const d = await r.json();
@@ -26,7 +31,65 @@ export default function AdminOrders() {
   }
   useEffect(() => {
     load();
+    const interval = window.setInterval(load, 15000);
+    return () => window.clearInterval(interval);
   }, []);
+  async function enablePushNotifications() {
+    if (!("serviceWorker" in navigator) || !("PushManager" in window)) {
+      setPushStatus("error");
+      setError("This browser does not support push notifications.");
+      return;
+    }
+    setPushBusy(true);
+    setError("");
+    try {
+      const permission = await Notification.requestPermission();
+      if (permission !== "granted") {
+        setPushStatus("disabled");
+        return;
+      }
+      const keyResponse = await fetch("/api/admin/push");
+      const keyData = await keyResponse.json();
+      if (!keyResponse.ok) throw new Error(keyData.error);
+      const registration = await navigator.serviceWorker.register("/sw.js");
+      const existing = await registration.pushManager.getSubscription();
+      if (existing) await existing.unsubscribe();
+      const subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: Uint8Array.from(
+          atob(keyData.publicKey.replace(/-/g, "+").replace(/_/g, "/")),
+          (character) => character.charCodeAt(0),
+        ),
+      });
+      const saveResponse = await fetch("/api/admin/push", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(subscription),
+      });
+      const saveData = await saveResponse.json();
+      if (!saveResponse.ok) throw new Error(saveData.error);
+      setPushStatus("enabled");
+    } catch (error) {
+      setPushStatus("error");
+      setError(error instanceof Error ? error.message : "Could not enable notifications.");
+    } finally {
+      setPushBusy(false);
+    }
+  }
+  async function testPushNotifications() {
+    setTestBusy(true);
+    setError("");
+    try {
+      const response = await fetch("/api/admin/push", { method: "PUT" });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error);
+      setError(`Test notification accepted for ${data.sent} device${data.sent === 1 ? "" : "s"}.`);
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "Test notification failed.");
+    } finally {
+      setTestBusy(false);
+    }
+  }
   async function action(path: string, id: string, reason?: string) {
     setBusy(id);
     const r = await fetch(`/api/${path}`, {
@@ -92,6 +155,28 @@ export default function AdminOrders() {
           <h1 className="text-3xl font-black">Orders</h1>
           <div className="flex w-full flex-wrap gap-2 sm:w-auto">
             <ThemeToggle />
+            <button
+              type="button"
+              onClick={enablePushNotifications}
+              disabled={pushBusy || pushStatus === "enabled"}
+              className="rounded-full bg-zinc-800 px-4 py-2 text-sm disabled:opacity-60"
+            >
+              {pushBusy
+                ? "Enabling..."
+                : pushStatus === "enabled"
+                  ? "Notifications enabled"
+                  : "Enable notifications"}
+            </button>
+            {pushStatus === "enabled" && (
+              <button
+                type="button"
+                onClick={testPushNotifications}
+                disabled={testBusy}
+                className="rounded-full bg-zinc-800 px-4 py-2 text-sm disabled:opacity-60"
+              >
+                {testBusy ? "Testing..." : "Test notification"}
+              </button>
+            )}
             <a
               href="/admin/checkin"
               className="rounded-full bg-zinc-800 px-4 py-2 text-sm"
