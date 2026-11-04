@@ -3,6 +3,7 @@ import { formatDate, formatMoney } from "@/lib/format";
 import { SiteShell, ButtonLink } from "@/components/site-shell";
 import { PurchaseCta } from "@/components/purchase-cta";
 import { CapacityNotice } from "@/components/capacity-notice";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -45,37 +46,52 @@ export default function Home() {
               ))}
             </div>
           </div>
-          <div className="min-w-0 self-start rounded-3xl border border-[var(--theme-border)] bg-[var(--theme-surface)] p-6 shadow-2xl">
-            <p className="text-sm uppercase tracking-widest text-zinc-500">
-              Bank transfer 
+          <div className="min-w-0 self-start">
+            <div className="rounded-3xl border border-[var(--theme-border)] bg-[var(--theme-surface)] p-6 shadow-2xl">
+              <p className="text-sm uppercase tracking-widest text-zinc-500">
+                Bank transfer
+              </p>
+              <h2 className="mt-4 text-3xl font-black">
+                {formatMoney(eventConfig.ticketPrice)}{" "}
+                <span className="text-base font-normal text-zinc-500">
+                  per ticket
+                </span>
+              </h2>
+              <div className="mt-6 space-y-3 text-sm leading-relaxed text-zinc-300">
+                <p>
+                  <b className="text-white">Account Holder:</b>{" "}
+                  {eventConfig.bank.accountName}
+                </p>
+                <p>
+                  <b className="text-white">Bank:</b> {eventConfig.bank.bankName}
+                </p>
+                <p>
+                  <b className="text-white">Number:</b>{" "}
+                  {eventConfig.bank.accountNumber}
+                </p>
+                <p>
+                  <b className="text-white">Branch:</b> {eventConfig.bank.branch}
+                </p>
+                <p
+                  className="break-words border-t border-zinc-800 pt-4"
+                  style={{ overflowWrap: "anywhere" }}
+                >
+                  {eventConfig.bank.paymentInstructions}
+                </p>
+              </div>
+            </div>
+            <p className="mt-5 text-center text-sm font-bold uppercase tracking-widest text-zinc-500">
+              Proudly partnering with
             </p>
-            <h2 className="mt-4 text-3xl font-black">
-              {formatMoney(eventConfig.ticketPrice)}{" "}
-              <span className="text-base font-normal text-zinc-500">
-                per ticket
-              </span>
-            </h2>
-            <div className="mt-6 space-y-3 text-sm leading-relaxed text-zinc-300">
-              <p>
-                <b className="text-white">Account Holder:</b>{" "}
-                {eventConfig.bank.accountName}
-              </p>
-              <p>
-                <b className="text-white">Bank:</b> {eventConfig.bank.bankName}
-              </p>
-              <p>
-                <b className="text-white">Number:</b>{" "}
-                {eventConfig.bank.accountNumber}
-              </p>
-              <p>
-                <b className="text-white">Branch:</b> {eventConfig.bank.branch}
-              </p>
-              <p
-                className="break-words border-t border-zinc-800 pt-4"
-                style={{ overflowWrap: "anywhere" }}
-              >
-                {eventConfig.bank.paymentInstructions}
-              </p>
+            <div className="mt-3 rounded-2xl border border-[#164d9b] bg-[#003b7a] p-5 text-center shadow-xl">
+              <Image
+                src="/partners/redbull.webp"
+                alt="Red Bull"
+                width={520}
+                height={340}
+                className="mx-auto h-auto w-full max-w-[230px]"
+                priority
+              />
             </div>
           </div>
         </div>
