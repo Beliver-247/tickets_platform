@@ -10,7 +10,7 @@ export default function Home() {
     <SiteShell>
       <section className="noise border-b border-[var(--theme-border)]">
         <div className="mx-auto grid max-w-6xl min-w-0 gap-10 px-5 py-14 sm:py-20 lg:grid-cols-[minmax(0,1.2fr)_minmax(300px,.8fr)] lg:items-start lg:py-28">
-          <div className="min-w-0">
+          <div className="order-1 min-w-0 lg:order-none">
             <p className="mb-5 text-sm font-bold uppercase tracking-[.3em] text-[var(--accent)]">
               {eventConfig.tagline}
             </p>
@@ -46,8 +46,8 @@ export default function Home() {
               ))}
             </div>
           </div>
-          <div className="min-w-0 self-start">
-            <div className="rounded-3xl border border-[var(--theme-border)] bg-[var(--theme-surface)] p-6 shadow-2xl">
+          <div className="order-2 flex min-w-0 flex-col gap-5 self-start lg:col-start-2 lg:row-start-1">
+            <div className="order-2 rounded-3xl border border-[var(--theme-border)] bg-[var(--theme-surface)] p-6 shadow-2xl lg:order-1">
               <p className="text-sm uppercase tracking-widest text-zinc-500">
                 Bank transfer
               </p>
@@ -80,18 +80,20 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <p className="mt-5 text-center text-sm font-bold uppercase tracking-widest text-zinc-500">
-              Proudly partnering with
-            </p>
-            <div className="mt-3 rounded-2xl border border-[#164d9b] bg-[#003b7a] p-5 text-center shadow-xl">
-              <Image
-                src="/partners/redbull.webp"
-                alt="Red Bull"
-                width={520}
-                height={340}
-                className="mx-auto h-auto w-full max-w-[230px]"
-                priority
-              />
+            <div className="order-1 lg:order-2">
+              <p className="text-center text-sm font-bold uppercase tracking-widest text-zinc-500">
+                Proudly partnering with
+              </p>
+              <div className="mt-3 rounded-2xl border border-[#164d9b] bg-[#003b7a] p-5 text-center shadow-xl">
+                <Image
+                  src="/partners/redbull.webp"
+                  alt="Red Bull"
+                  width={520}
+                  height={340}
+                  className="mx-auto h-auto w-full max-w-[230px]"
+                  priority
+                />
+              </div>
             </div>
           </div>
         </div>
