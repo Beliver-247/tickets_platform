@@ -3,7 +3,6 @@ import { eventConfig } from "@/config/event";
 export const MAX_RECEIPT_BYTES = 5 * 1024 * 1024;
 export const allowedReceiptTypes = ["image/jpeg", "image/png", "image/webp", "application/pdf"];
 export const SLIIT_ID_PATTERN = /^[A-Z]{2}\d{8}$/i;
-export const BANK_REFERENCE_PATTERN = /^DJ[-\s]?[A-Z]{2}\d{8}$/i;
 
 export function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -47,7 +46,7 @@ export function validateOrderInput(input: { name: string; email: string; phone: 
   if (!/^\d{10}$/.test(input.phone.trim())) return "Enter a valid 10-digit phone number.";
   if (!Number.isInteger(input.qty) || input.qty < 1 || input.qty > eventConfig.maxTicketsPerOrder) return "Invalid ticket quantity.";
   if (!isValidSliitId(input.sliitId)) return "Enter a valid SLIIT ID (two letters followed by 8 digits).";
-  if (!BANK_REFERENCE_PATTERN.test(input.bankReference.trim())) return "Bank reference must start with DJ and include your 2-letter, 8-digit SLIIT ID.";
+  if (!input.bankReference.trim()) return "Enter your bank reference.";
   const transactionAt = parseTransactionAt(input.transactionAt);
   if (!transactionAt) return "Enter a valid transaction date and time.";
   if (transactionAt.getTime() > Date.now()) return "Transaction time cannot be in the future.";

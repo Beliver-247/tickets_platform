@@ -19,8 +19,7 @@ export default function BuyPage() {
   const [sliitId, setSliitId] = useState(""),
     [email, setEmail] = useState(""),
     [emailEdited, setEmailEdited] = useState(false),
-    [bankReference, setBankReference] = useState(""),
-    [bankReferenceEdited, setBankReferenceEdited] = useState(false);
+    [bankReference, setBankReference] = useState("");
   function defaultTransactionAt() {
     const now = new Date(),
       local = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
@@ -124,8 +123,6 @@ export default function BuyPage() {
                 setSliitId(nextSliitId);
                 if (!emailEdited)
                   setEmail(nextSliitId ? `${nextSliitId}@my.sliit.lk` : "");
-                if (!bankReferenceEdited)
-                  setBankReference(nextSliitId ? `DJ-${nextSliitId}` : "");
               }}
               placeholder="IT22110084"
               required
@@ -195,15 +192,14 @@ export default function BuyPage() {
               required
               value={bankReference}
               onChange={(e) => {
-                setBankReferenceEdited(true);
                 setBankReference(e.target.value);
               }}
-              placeholder="DJ-IT22110084"
+              placeholder="Enter your bank reference"
               className="mt-2 w-full rounded-xl border border-zinc-700 bg-zinc-950 px-4 py-3 font-normal outline-none focus:border-[var(--primary)]"
             />
             <span className="mt-1 block text-xs font-normal text-zinc-500">
-              Pre-filled from your SLIIT ID. Formats like DJ-IT22110084,
-              dj-ab22110084, or dj ab22110084 are accepted.
+              Enter the reference from your bank transfer. We prefer formats
+              like DJ-IT22110084, but other bank reference formats are accepted.
             </span>
           </label>
           <label className="block text-sm font-bold">
