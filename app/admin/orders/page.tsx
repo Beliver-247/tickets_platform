@@ -183,6 +183,12 @@ export default function AdminOrders() {
             >
               Check-in
             </a>
+            <a
+              href="/admin/analytics"
+              className="rounded-full bg-zinc-800 px-4 py-2 text-sm"
+            >
+              Analytics
+            </a>
             <button
               onClick={() =>
                 createClient()
