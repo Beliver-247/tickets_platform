@@ -88,6 +88,12 @@ export default function CheckinPage() {
           >
             Orders
           </a>
+          <a
+            href="/admin/analytics"
+            className="rounded-full bg-zinc-800 px-4 py-2 text-sm"
+          >
+            Analytics
+          </a>
         </div>
         <div className="mt-6 grid grid-cols-3 gap-2 text-center">
           <div className="rounded-xl bg-zinc-900 p-3">
