@@ -110,6 +110,34 @@ body[data-theme="light"] .early-bird-title,
 body[data-theme="light"] .early-bird-deadline {
   color: #ffffff;
 }
+
+.early-bird-card {
+  background:
+    radial-gradient(circle at top right, rgba(255, 43, 214, 0.25), transparent 45%),
+    linear-gradient(145deg, #24102f, #120c1c);
+}
+
+body[data-theme="light"] .early-bird-card {
+  border-color: #e2b4eb;
+  background:
+    radial-gradient(circle at top right, rgba(255, 43, 214, 0.18), transparent 45%),
+    linear-gradient(145deg, #fff8ff, #f3e5f7);
+}
+
+body[data-theme="light"] .early-bird-title {
+  color: #30153d;
+}
+
+body[data-theme="light"] .early-bird-label,
+body[data-theme="light"] .early-bird-copy {
+  color: #6d2d7b;
+}
+
+body[data-theme="light"] .early-bird-deadline {
+  border-color: #d78ae6;
+  background-color: #f0c8f6;
+  color: #4a1757;
+}
 body[data-theme="light"] input,
 body[data-theme="light"] select,
 body[data-theme="light"] textarea {

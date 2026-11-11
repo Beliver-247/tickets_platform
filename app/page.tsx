@@ -51,29 +51,38 @@ export default function Home() {
             </div>
           </div>
           <div className="contents lg:col-start-2 lg:row-start-1 lg:flex lg:flex-col lg:gap-5 lg:self-start">
-            <div className="early-bird-card order-3 relative mt-6 overflow-hidden rounded-2xl border border-fuchsia-400/30 bg-[radial-gradient(circle_at_top_right,_rgba(255,43,214,.25),_transparent_45%),linear-gradient(145deg,#24102f,#120c1c)] p-3 shadow-xl shadow-fuchsia-950/30 lg:order-1 lg:mt-0 lg:p-5">
+            <div className="early-bird-card order-3 relative mt-6 overflow-hidden rounded-2xl border border-fuchsia-400/30 p-3 shadow-xl shadow-fuchsia-950/30 lg:order-1 lg:mt-0 lg:p-5">
               <div className="flex items-start gap-3 lg:block">
                 <Image
                   src="/partners/Barista.svg"
                   alt="Barista"
                   width={240}
                   height={113}
-                  className="order-2 mt-1 h-auto w-16 shrink-0 lg:order-none lg:mt-0 lg:w-32"
+                  className="order-2 mt-1 hidden h-auto w-16 shrink-0 lg:order-none lg:mt-0 lg:block lg:w-32"
                 />
                 <div className="order-1 min-w-0 flex-1 lg:order-none">
-                  <p className="text-[10px] font-black uppercase tracking-[.2em] text-fuchsia-200 lg:mt-4 lg:text-[13px]">
+                  <p className="early-bird-label text-[10px] font-black uppercase tracking-[.2em] text-fuchsia-200 lg:mt-4 lg:text-[13px]">
                     Limited-time offer
                   </p>
-                  <h2 className="early-bird-title mt-1 text-xl font-black uppercase leading-none tracking-[-.03em] text-white lg:mt-2 lg:text-2xl">
-                    Free{" "}
-                    <span className="early-bird-brand text-[#f06341]">
-                      Barista
-                    </span>{" "}
-                    voucher
+                  <h2 className="early-bird-title mt-3 text-xl font-black uppercase leading-none tracking-[-.03em] text-white lg:mt-2 lg:text-2xl">
+                    <span className="lg:hidden">Free voucher</span>
+                    <span className="hidden lg:inline">Free Barista voucher</span>
                   </h2>
-                  <p className="mt-2 text-xs leading-relaxed text-fuchsia-100/80 lg:mt-4">
-                    Purchase your ticket/s before November
-                    14, 2026 and get a free Barista voucher!
+                  <p className="early-bird-copy mt-2 text-xs leading-relaxed text-fuchsia-100/80 lg:hidden">
+                    Free{" "}
+                    <Image
+                      src="/partners/Barista.svg"
+                      alt="Barista"
+                      width={100}
+                      height={47}
+                      className="relative -top-0.5 mx-0.5 inline-block h-auto w-11 align-middle"
+                    />{" "}
+                    voucher only if you purchase ticket/s before 14 November
+                    2026.
+                  </p>
+                  <p className="early-bird-copy mt-4 hidden text-xs leading-relaxed text-fuchsia-100/80 lg:block">
+                    Purchase your ticket/s before November 14, 2026 and get a
+                    free Barista voucher!
                   </p>
                   <div className="early-bird-deadline mt-2 inline-block rounded-lg border border-fuchsia-200/30 bg-fuchsia-400/15 px-2 py-1 text-[9px] font-black tracking-[.1em] text-white lg:mt-4 lg:px-2.5 lg:py-1.5 lg:text-[10px] lg:tracking-[.12em]">
                     BUY BEFORE 14 NOVEMBER
