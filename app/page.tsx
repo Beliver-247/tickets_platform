@@ -51,30 +51,41 @@ export default function Home() {
             </div>
           </div>
           <div className="contents lg:col-start-2 lg:row-start-1 lg:flex lg:flex-col lg:gap-5 lg:self-start">
-            <div className="early-bird-card order-3 relative mt-6 overflow-hidden rounded-2xl border border-fuchsia-400/30 bg-[radial-gradient(circle_at_top_right,_rgba(255,43,214,.25),_transparent_45%),linear-gradient(145deg,#24102f,#120c1c)] p-3 shadow-xl shadow-fuchsia-950/30 lg:order-1 lg:mt-0 lg:p-4">
-              <div className="flex items-center gap-3">
-                <div className="min-w-0 flex-1">
-                  <p className="text-[10px] font-black uppercase tracking-[.2em] text-fuchsia-200">
-                    Limited-time offer
-                  </p>
-                  <h2 className="early-bird-title mt-1 text-xl font-black uppercase leading-none tracking-[-.03em] text-white lg:text-2xl">
-                    Free Barista voucher
-                  </h2>
-                </div>
+            <div className="early-bird-card order-3 relative mt-6 overflow-hidden rounded-2xl border border-fuchsia-400/30 bg-[radial-gradient(circle_at_top_right,_rgba(255,43,214,.25),_transparent_45%),linear-gradient(145deg,#24102f,#120c1c)] p-3 shadow-xl shadow-fuchsia-950/30 lg:order-1 lg:mt-0 lg:p-5">
+              <div className="flex items-start gap-3 lg:block">
                 <Image
                   src="/partners/Barista.svg"
                   alt="Barista"
                   width={240}
                   height={113}
-                  className="h-auto w-16 shrink-0 lg:w-20"
+                  className="order-2 mt-1 hidden h-auto w-16 shrink-0 lg:order-none lg:mt-0 lg:block lg:w-32"
                 />
-              </div>
-              <p className="mt-2 text-xs leading-relaxed text-fuchsia-100/80 lg:mt-3">
-                Purchase your Open Mic &amp; DJ Night ticket before November
-                14, 2026 and get a free Barista voucher!
-              </p>
-              <div className="early-bird-deadline mt-2 inline-block rounded-lg border border-fuchsia-200/30 bg-fuchsia-400/15 px-2 py-1 text-[9px] font-black tracking-[.1em] text-white lg:mt-3 lg:px-2.5 lg:text-[10px] lg:tracking-[.12em]">
-                BUY BEFORE 14 NOVEMBER
+                <div className="order-1 min-w-0 flex-1 lg:order-none">
+                  <p className="text-[10px] font-black uppercase tracking-[.2em] text-fuchsia-200 lg:mt-4 lg:text-[13px]">
+                    Limited-time offer
+                  </p>
+                  <h2 className="early-bird-title mt-1 text-xl font-black uppercase leading-none tracking-[-.03em] text-white lg:mt-2 lg:text-2xl">
+                    <span className="inline-flex items-center gap-3 lg:hidden">
+                      Free
+                      <Image
+                        src="/partners/Barista.svg"
+                        alt="Barista"
+                        width={160}
+                        height={75}
+                        className="h-auto w-14"
+                      />
+                      voucher
+                    </span>
+                    <span className="hidden lg:inline">Free Barista voucher</span>
+                  </h2>
+                  <p className="mt-2 text-xs leading-relaxed text-fuchsia-100/80 lg:mt-4">
+                    Purchase your ticket/s before November
+                    14, 2026 and get a free Barista voucher!
+                  </p>
+                  <div className="early-bird-deadline mt-2 inline-block rounded-lg border border-fuchsia-200/30 bg-fuchsia-400/15 px-2 py-1 text-[9px] font-black tracking-[.1em] text-white lg:mt-4 lg:px-2.5 lg:py-1.5 lg:text-[10px] lg:tracking-[.12em]">
+                    BUY BEFORE 14 NOVEMBER
+                  </div>
+                </div>
               </div>
             </div>
             <div className="order-4 mt-3 rounded-2xl border border-[var(--theme-border)] bg-[var(--theme-surface)] px-4 py-3 text-center shadow-lg lg:order-2 lg:mt-0">
@@ -89,17 +100,17 @@ export default function Home() {
                 className="mx-auto mt-1 h-auto w-[90px]"
               />
             </div>
-            <div className="order-6 mt-5 rounded-3xl border border-[var(--theme-border)] bg-[var(--theme-surface)] p-6 shadow-2xl lg:order-3 lg:mt-0">
+            <div className="order-6 mt-5 rounded-3xl border border-[var(--theme-border)] bg-[var(--theme-surface)] p-4 shadow-2xl lg:order-3 lg:mt-0">
               <p className="text-sm uppercase tracking-widest text-zinc-500">
                 Bank transfer
               </p>
-              <h2 className="mt-4 text-3xl font-black">
+              <h2 className="mt-3 text-3xl font-black">
                 {formatMoney(eventConfig.ticketPrice)}{" "}
                 <span className="text-base font-normal text-zinc-500">
                   per ticket
                 </span>
               </h2>
-              <div className="mt-6 space-y-3 text-sm leading-relaxed text-zinc-300">
+              <div className="mt-4 space-y-2 text-sm leading-relaxed text-zinc-300">
                 <p>
                   <b className="text-white">Account Holder:</b>{" "}
                   {eventConfig.bank.accountName}
@@ -115,7 +126,7 @@ export default function Home() {
                   <b className="text-white">Branch:</b> {eventConfig.bank.branch}
                 </p>
                 <p
-                  className="break-words border-t border-zinc-800 pt-4"
+                  className="break-words border-t border-zinc-800 pt-3"
                   style={{ overflowWrap: "anywhere" }}
                 >
                   {eventConfig.bank.paymentInstructions}
