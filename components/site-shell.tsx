@@ -45,7 +45,7 @@ export function ButtonLink({
   return (
     <Link
       href={href}
-      className={`inline-flex items-center justify-center rounded-full px-6 py-3 font-bold transition ${muted ? "bg-zinc-800 text-[var(--theme-foreground)]" : "bg-[var(--primary)] text-zinc-950 hover:opacity-90"}`}
+      className={`inline-flex items-center justify-center rounded-full px-6 py-3 font-bold transition ${muted ? "bg-zinc-800 text-[var(--theme-foreground)]" : "purchase-button bg-[var(--primary)] text-white hover:opacity-90"}`}
     >
       {children}
     </Link>

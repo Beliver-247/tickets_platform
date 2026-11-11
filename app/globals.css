@@ -138,6 +138,10 @@ body[data-theme="light"] .early-bird-deadline {
   background-color: #f0c8f6;
   color: #4a1757;
 }
+
+.purchase-button {
+  color: #ffffff !important;
+}
 body[data-theme="light"] input,
 body[data-theme="light"] select,
 body[data-theme="light"] textarea {
