@@ -106,6 +106,10 @@ body[data-theme="light"] .text-zinc-400,
 body[data-theme="light"] .text-zinc-500 {
   color: #705f7b;
 }
+body[data-theme="light"] .early-bird-title,
+body[data-theme="light"] .early-bird-deadline {
+  color: #ffffff;
+}
 body[data-theme="light"] input,
 body[data-theme="light"] select,
 body[data-theme="light"] textarea {

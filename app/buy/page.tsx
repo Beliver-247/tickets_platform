@@ -258,6 +258,9 @@ export default function BuyPage() {
           >
             {loading ? "Submitting…" : "Submit for verification"}
           </button>
+          <p className="text-center text-sm text-zinc-500">
+            Barista voucher/s will be handed over at the event entrance.
+          </p>
         </form>
       </div>
     </SiteShell>
