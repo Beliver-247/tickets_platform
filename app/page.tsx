@@ -58,25 +58,18 @@ export default function Home() {
                   alt="Barista"
                   width={240}
                   height={113}
-                  className="order-2 mt-1 hidden h-auto w-16 shrink-0 lg:order-none lg:mt-0 lg:block lg:w-32"
+                  className="order-2 mt-1 h-auto w-16 shrink-0 lg:order-none lg:mt-0 lg:w-32"
                 />
                 <div className="order-1 min-w-0 flex-1 lg:order-none">
                   <p className="text-[10px] font-black uppercase tracking-[.2em] text-fuchsia-200 lg:mt-4 lg:text-[13px]">
                     Limited-time offer
                   </p>
                   <h2 className="early-bird-title mt-1 text-xl font-black uppercase leading-none tracking-[-.03em] text-white lg:mt-2 lg:text-2xl">
-                    <span className="inline-flex items-center gap-3 lg:hidden">
-                      Free
-                      <Image
-                        src="/partners/Barista.svg"
-                        alt="Barista"
-                        width={160}
-                        height={75}
-                        className="h-auto w-14"
-                      />
-                      voucher
-                    </span>
-                    <span className="hidden lg:inline">Free Barista voucher</span>
+                    Free{" "}
+                    <span className="early-bird-brand text-[#f06341]">
+                      Barista
+                    </span>{" "}
+                    voucher
                   </h2>
                   <p className="mt-2 text-xs leading-relaxed text-fuchsia-100/80 lg:mt-4">
                     Purchase your ticket/s before November
