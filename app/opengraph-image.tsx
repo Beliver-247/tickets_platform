@@ -1,5 +1,9 @@
 import { ImageResponse } from "next/og";
 import { eventConfig } from "@/config/event";
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+
+export const runtime = "nodejs";
 
 export const alt = `${eventConfig.eventName} - ${eventConfig.tagline}`;
 export const size = {
@@ -8,7 +12,17 @@ export const size = {
 };
 export const contentType = "image/png";
 
-export default function OpenGraphImage() {
+async function assetDataUrl(assetPath: string, type: string) {
+  const buffer = await readFile(path.join(process.cwd(), "public", "partners", assetPath));
+  return `data:${type};base64,${buffer.toString("base64")}`;
+}
+
+export default async function OpenGraphImage() {
+  const [baristaLogo, redBullLogo] = await Promise.all([
+    assetDataUrl("barista-og.png", "image/png"),
+    assetDataUrl("redbull-og.png", "image/png"),
+  ]);
+
   return new ImageResponse(
     <div
       style={{
@@ -63,6 +77,25 @@ export default function OpenGraphImage() {
         }}
       >
         Tickets available now
+      </div>
+      <div
+        style={{
+          alignItems: "center",
+          display: "flex",
+          gap: 28,
+          justifyContent: "flex-end",
+        }}
+      >
+        <img
+          alt="Barista"
+          src={baristaLogo}
+          style={{ height: 48, width: 102 }}
+        />
+        <img
+          alt="Red Bull"
+          src={redBullLogo}
+          style={{ height: 58, width: 88 }}
+        />
       </div>
     </div>,
     size,
