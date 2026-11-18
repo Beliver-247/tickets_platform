@@ -1,7 +1,7 @@
 "use client";
 
 import imageCompression from "browser-image-compression";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { eventConfig } from "@/config/event";
 import { formatMoney } from "@/lib/format";
 import {
@@ -10,16 +10,18 @@ import {
   validateOrderInput,
 } from "@/lib/validation";
 import { SiteShell } from "@/components/site-shell";
-import { getSalesOpen } from "@/lib/sales";
-
-export const dynamic = "force-dynamic";
-
-export default async function BuyPage() {
-  const salesOpen = await getSalesOpen();
+export default function BuyPage() {
   const [qty, setQty] = useState(1),
     [file, setFile] = useState<File | null>(null),
     [error, setError] = useState(""),
     [loading, setLoading] = useState(false);
+  const [salesOpen, setSalesOpen] = useState<boolean | null>(null);
+  useEffect(() => {
+    fetch("/api/sales")
+      .then((response) => (response.ok ? response.json() : null))
+      .then((data) => setSalesOpen(data?.salesOpen ?? eventConfig.salesOpen))
+      .catch(() => setSalesOpen(eventConfig.salesOpen));
+  }, []);
   const [sliitId, setSliitId] = useState(""),
     [email, setEmail] = useState(""),
     [emailEdited, setEmailEdited] = useState(false),
@@ -75,6 +77,14 @@ export default async function BuyPage() {
       setLoading(false);
     }
   }
+  if (salesOpen === null)
+    return (
+      <SiteShell>
+        <div className="mx-auto max-w-2xl px-5 py-12">
+          <p className="text-zinc-400">Checking ticket availability…</p>
+        </div>
+      </SiteShell>
+    );
   if (!salesOpen)
     return (
       <SiteShell>
