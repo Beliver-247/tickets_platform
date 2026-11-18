@@ -4,8 +4,12 @@ import { SiteShell, ButtonLink } from "@/components/site-shell";
 import { PurchaseCta } from "@/components/purchase-cta";
 import { CapacityNotice } from "@/components/capacity-notice";
 import Image from "next/image";
+import { getSalesOpen } from "@/lib/sales";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const salesOpen = await getSalesOpen();
   return (
     <SiteShell>
       <section className="noise border-b border-[var(--theme-border)]">
@@ -103,37 +107,52 @@ export default function Home() {
               />
             </div>
             <div className="order-6 mt-5 rounded-3xl border border-[var(--theme-border)] bg-[var(--theme-surface)] p-4 shadow-2xl lg:order-3 lg:mt-0">
-              <p className="text-sm uppercase tracking-widest text-zinc-500">
-                Bank transfer
-              </p>
-              <h2 className="mt-3 text-3xl font-black">
-                {formatMoney(eventConfig.ticketPrice)}{" "}
-                <span className="text-base font-normal text-zinc-500">
-                  per ticket
-                </span>
-              </h2>
-              <div className="mt-4 space-y-2 text-sm leading-relaxed text-zinc-300">
-                <p>
-                  <b className="text-white">Account Holder:</b>{" "}
-                  {eventConfig.bank.accountName}
-                </p>
-                <p>
-                  <b className="text-white">Bank:</b> {eventConfig.bank.bankName}
-                </p>
-                <p>
-                  <b className="text-white">Number:</b>{" "}
-                  {eventConfig.bank.accountNumber}
-                </p>
-                <p>
-                  <b className="text-white">Branch:</b> {eventConfig.bank.branch}
-                </p>
-                <p
-                  className="break-words border-t border-zinc-800 pt-3"
-                  style={{ overflowWrap: "anywhere" }}
-                >
-                  {eventConfig.bank.paymentInstructions}
-                </p>
-              </div>
+              {salesOpen ? (
+                <>
+                  <p className="text-sm uppercase tracking-widest text-zinc-500">
+                    Bank transfer
+                  </p>
+                  <h2 className="mt-3 text-3xl font-black">
+                    {formatMoney(eventConfig.ticketPrice)}{" "}
+                    <span className="text-base font-normal text-zinc-500">
+                      per ticket
+                    </span>
+                  </h2>
+                  <div className="mt-4 space-y-2 text-sm leading-relaxed text-zinc-300">
+                    <p>
+                      <b className="text-white">Account Holder:</b>{" "}
+                      {eventConfig.bank.accountName}
+                    </p>
+                    <p>
+                      <b className="text-white">Bank:</b>{" "}
+                      {eventConfig.bank.bankName}
+                    </p>
+                    <p>
+                      <b className="text-white">Number:</b>{" "}
+                      {eventConfig.bank.accountNumber}
+                    </p>
+                    <p>
+                      <b className="text-white">Branch:</b>{" "}
+                      {eventConfig.bank.branch}
+                    </p>
+                    <p
+                      className="break-words border-t border-zinc-800 pt-3"
+                      style={{ overflowWrap: "anywhere" }}
+                    >
+                      {eventConfig.bank.paymentInstructions}
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <div className="rounded-2xl border border-[var(--theme-border)] bg-[var(--theme-subtle)] px-5 py-8 text-center">
+                  <p className="text-sm font-black uppercase tracking-widest text-[var(--accent)]">
+                    Ticket sales closed
+                  </p>
+                  <p className="mt-3 text-sm leading-relaxed text-[var(--theme-muted)]">
+                    Bank transfer details are currently unavailable.
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -3,6 +3,7 @@ import { eventConfig } from "@/config/event";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { allowedReceiptTypes, MAX_RECEIPT_BYTES, parseTransactionAt, validateOrderInput } from "@/lib/validation";
 import { notifyAdminsOfNewOrder } from "@/lib/push";
+import { getSalesOpen } from "@/lib/sales";
 
 function normalizeBankReference(bankReference: string) {
   const trimmed = bankReference.trim().toUpperCase();
@@ -11,7 +12,7 @@ function normalizeBankReference(bankReference: string) {
 }
 
 export async function POST(request: NextRequest) {
-  if (!eventConfig.salesOpen) return Response.json({ error: "Sales are closed." }, { status: 400 });
+  if (!await getSalesOpen()) return Response.json({ error: "Sales are closed." }, { status: 400 });
   const form = await request.formData(), file = form.get("receipt");
   const input = {
     name: String(form.get("name") ?? ""),

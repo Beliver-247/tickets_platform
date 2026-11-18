@@ -10,8 +10,12 @@ import {
   validateOrderInput,
 } from "@/lib/validation";
 import { SiteShell } from "@/components/site-shell";
+import { getSalesOpen } from "@/lib/sales";
 
-export default function BuyPage() {
+export const dynamic = "force-dynamic";
+
+export default async function BuyPage() {
+  const salesOpen = await getSalesOpen();
   const [qty, setQty] = useState(1),
     [file, setFile] = useState<File | null>(null),
     [error, setError] = useState(""),
@@ -71,6 +75,21 @@ export default function BuyPage() {
       setLoading(false);
     }
   }
+  if (!salesOpen)
+    return (
+      <SiteShell>
+        <div className="mx-auto max-w-2xl px-5 py-12">
+          <p className="text-sm uppercase tracking-widest text-[var(--accent)]">
+            Ticket sales closed
+          </p>
+          <h1 className="mt-2 text-4xl font-black">Requests are closed</h1>
+          <p className="mt-3 text-zinc-400">
+            We are no longer accepting ticket requests. Bank transfer details
+            and the submission form are unavailable.
+          </p>
+        </div>
+      </SiteShell>
+    );
   return (
     <SiteShell>
       <div className="mx-auto max-w-2xl px-5 py-12">

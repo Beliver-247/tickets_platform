@@ -10,7 +10,7 @@ export const eventConfig = {
   currency: "LKR",
   maxTicketsPerOrder: 5,
   totalCapacity: undefined as number | undefined,
-  salesOpen: true,
+  salesOpen: false,
   bank: {
     accountName: "Dumindu Mendis",
     bankName: "People's Bank",

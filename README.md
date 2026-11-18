@@ -83,7 +83,7 @@ Never commit `.env.local`.
 ### 3. Configure Supabase
 
 1. Open the Supabase project SQL Editor.
-2. Run [`supabase/migrations/001_initial.sql`](./supabase/migrations/001_initial.sql), then [`supabase/migrations/002_sliit_ticket_numbers.sql`](./supabase/migrations/002_sliit_ticket_numbers.sql), [`supabase/migrations/003_transaction_time.sql`](./supabase/migrations/003_transaction_time.sql), [`supabase/migrations/004_allow_duplicate_bank_references.sql`](./supabase/migrations/004_allow_duplicate_bank_references.sql), [`supabase/migrations/005_sequential_ticket_numbers.sql`](./supabase/migrations/005_sequential_ticket_numbers.sql), and [`supabase/migrations/006_admin_push_subscriptions.sql`](./supabase/migrations/006_admin_push_subscriptions.sql).
+2. Run [`supabase/migrations/001_initial.sql`](./supabase/migrations/001_initial.sql), then [`supabase/migrations/002_sliit_ticket_numbers.sql`](./supabase/migrations/002_sliit_ticket_numbers.sql), [`supabase/migrations/003_transaction_time.sql`](./supabase/migrations/003_transaction_time.sql), [`supabase/migrations/004_allow_duplicate_bank_references.sql`](./supabase/migrations/004_allow_duplicate_bank_references.sql), [`supabase/migrations/005_sequential_ticket_numbers.sql`](./supabase/migrations/005_sequential_ticket_numbers.sql), [`supabase/migrations/006_admin_push_subscriptions.sql`](./supabase/migrations/006_admin_push_subscriptions.sql), and [`supabase/migrations/007_event_settings.sql`](./supabase/migrations/007_event_settings.sql).
    The fourth migration allows multiple orders to use the same default SLIIT ID/reference; admins should verify each receipt separately.
 3. Confirm that the `receipts` Storage bucket is private.
 4. Create an Auth user with email and password.
@@ -95,6 +95,10 @@ Never commit `.env.local`.
    ```
 
 6. Disable public signups in Supabase Auth settings.
+
+The event settings migration creates the sales-status setting used by the admin
+orders page. Admins can use the **Sales open · Stop accepting** button to hide
+bank details and stop new submissions, or **Sales closed · Reopen** to resume.
 
 The migration creates:
 

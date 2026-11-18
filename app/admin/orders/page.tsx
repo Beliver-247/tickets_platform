@@ -23,6 +23,8 @@ export default function AdminOrders() {
     >("unknown"),
     [pushBusy, setPushBusy] = useState(false),
     [testBusy, setTestBusy] = useState(false);
+  const [salesOpen, setSalesOpen] = useState<boolean | null>(null),
+    [salesBusy, setSalesBusy] = useState(false);
   async function load() {
     const r = await fetch("/api/admin/orders");
     const d = await r.json();
@@ -31,9 +33,25 @@ export default function AdminOrders() {
   }
   useEffect(() => {
     load();
+    fetch("/api/sales").then((response) => response.ok ? response.json() : null)
+      .then((data) => data && setSalesOpen(data.salesOpen))
+      .catch(() => setError("Could not load sales status."));
     const interval = window.setInterval(load, 15000);
     return () => window.clearInterval(interval);
   }, []);
+  async function toggleSales() {
+    if (salesOpen === null) return;
+    setSalesBusy(true);
+    const response = await fetch("/api/sales", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ salesOpen: !salesOpen }),
+    });
+    const data = await response.json();
+    if (!response.ok) setError(data.error ?? "Could not update sales status.");
+    else setSalesOpen(data.salesOpen);
+    setSalesBusy(false);
+  }
   async function enablePushNotifications() {
     if (!("serviceWorker" in navigator) || !("PushManager" in window)) {
       setPushStatus("error");
@@ -157,6 +175,14 @@ export default function AdminOrders() {
             <ThemeToggle />
             <button
               type="button"
+              onClick={toggleSales}
+              disabled={salesBusy || salesOpen === null}
+              className={`rounded-full px-4 py-2 text-sm font-bold disabled:opacity-60 ${salesOpen ? "bg-emerald-500 text-black" : "bg-red-500 text-white"}`}
+            >
+              {salesOpen === null ? "Loading sales status..." : salesOpen ? "Sales open · Stop accepting" : "Sales closed · Reopen"}
+            </button>
+            <button
+              type="button"
               onClick={enablePushNotifications}
               disabled={pushBusy || pushStatus === "enabled"}
               className="rounded-full bg-zinc-800 px-4 py-2 text-sm disabled:opacity-60"
@@ -188,6 +214,12 @@ export default function AdminOrders() {
               className="rounded-full bg-zinc-800 px-4 py-2 text-sm"
             >
               Analytics
+            </a>
+            <a
+              href="/api/admin/orders/export"
+              className="rounded-full bg-zinc-800 px-4 py-2 text-sm"
+            >
+              Export Excel
             </a>
             <button
               onClick={() =>
