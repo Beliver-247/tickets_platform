@@ -13,7 +13,7 @@
     "@supabase/supabase-js": "latest",
     "@tailwindcss/postcss": "latest",
     "browser-image-compression": "latest",
-    "next": "latest",
+    "next": "16.4.6",
     "nodemailer": "latest",
     "react": "latest",
     "react-dom": "latest",
